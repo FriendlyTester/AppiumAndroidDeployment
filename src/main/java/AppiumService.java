@@ -28,6 +28,9 @@ public class AppiumService
 
     public boolean startAppiumServers(List<AndroidDevice> devicesAndPorts)
     {
+        //Thanks to this thread for this code.
+        //https://discuss.appium.io/t/launching-and-stopping-appium-server-programmtically/700
+
         try
         {
             for (AndroidDevice devicessss : devicesAndPorts)
