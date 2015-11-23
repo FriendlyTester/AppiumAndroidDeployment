@@ -3,8 +3,11 @@ A project, to be able to deploy an app to multiple connected Android devices and
 
 #Setup
 This code is designed to run on a mac, I am not sure if it will run on a Windows machine. 
+
 This code has hardcoded paths in it, these are to the Appium app contents, so you will need to install the Appium app. http://appium.io/
+
 As it's Appium and Android, you will also need to have ADB installed.
+
 Ensure to change the apk file path in the DriverFactory to your apk.
 
 #Run
