@@ -1,5 +1,7 @@
 package services;
 
+import io.appium.java_client.service.local.AppiumDriverLocalService;
+import io.appium.java_client.service.local.AppiumServiceBuilder;
 import models.AndroidDevice;
 import org.apache.commons.exec.CommandLine;
 import org.apache.commons.exec.DefaultExecuteResultHandler;
@@ -7,6 +9,7 @@ import org.apache.commons.exec.DefaultExecutor;
 import org.apache.commons.exec.ExecuteException;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,63 +17,33 @@ import java.util.List;
  */
 public class AppiumService
 {
-    public boolean killAllAppiumServers()
+    public List<AppiumDriverLocalService> appiumServicesRunning= new ArrayList<AppiumDriverLocalService>();
+
+    public boolean startAppiumServers(List<AndroidDevice> devicesAndPorts)
     {
-        //Kill all appium servers
-        try
+        for (AndroidDevice device : devicesAndPorts)
         {
-            Process proc1 = Runtime.getRuntime().exec("killall -9 node");
+            AppiumDriverLocalService service = AppiumDriverLocalService.buildService(new AppiumServiceBuilder().usingPort(device.AppiumPort));
+            service.start();
+            appiumServicesRunning.add(service);
         }
-        catch (IOException exception)
+
+        for (AppiumDriverLocalService service : appiumServicesRunning)
         {
-            return false;
+            if (!service.isRunning())
+            {
+                return false;
+            }
         }
 
         return true;
     }
 
-    public boolean startAppiumServers(List<AndroidDevice> devicesAndPorts)
+    public void stopAppiumServers()
     {
-        //Thanks to this thread for this code.
-        //https://discuss.appium.io/t/launching-and-stopping-appium-server-programmtically/700
-
-        try
+        for (AppiumDriverLocalService service : appiumServicesRunning)
         {
-            for (AndroidDevice devicessss : devicesAndPorts)
-            {
-                //Process startAppiumProcess = Runtime.getRuntime().exec(String.format("appium -p %s --log /Users/richard/Downloads/appiumlog%s", devicessss.AppiumPort, devicessss.AppiumPort));
-                CommandLine command = new CommandLine("/Applications/Appium.app/Contents/Resources/node/bin/node");
-                command.addArgument("/Applications/Appium.app/Contents/Resources/node_modules/appium/bin/appium.js", false);
-                command.addArgument("--address", false);
-                command.addArgument("127.0.0.1");
-                command.addArgument("--port", false);
-                command.addArgument(String.valueOf(devicessss.AppiumPort));
-                command.addArgument("--full-reset", false);
-                DefaultExecuteResultHandler resultHandler = new DefaultExecuteResultHandler();
-                DefaultExecutor executor = new DefaultExecutor();
-                executor.setExitValue(1);
-                executor.execute(command, resultHandler);
-
-                Thread.sleep(5000); //Nasty wait to give Appium time to kick in, will seek to improve this
-                System.out.println("Appium server started");
-            }
+            service.stop();
         }
-
-        catch (InterruptedException e)
-        {
-         return false;
-        }
-
-        catch (ExecuteException e)
-        {
-            return false;
-        }
-
-        catch (IOException e)
-        {
-            return false;
-        }
-
-        return true;
     }
 }

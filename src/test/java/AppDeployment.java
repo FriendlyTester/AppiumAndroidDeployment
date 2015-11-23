@@ -17,7 +17,6 @@ public class AppDeployment
     public void DeployApp() throws IOException, InterruptedException
     {
         AppiumService appiumService = new AppiumService();
-        Assert.assertTrue(appiumService.killAllAppiumServers());
 
         ADBService adbService = new ADBService();
         List<AndroidDevice> deviceList = adbService.getAndroidDevices();
@@ -36,7 +35,7 @@ public class AppDeployment
             //This is where you would put code that logs you in or does something specific on your app
         }
 
-        Assert.assertTrue(appiumService.killAllAppiumServers());
+        appiumService.stopAppiumServers();
     }
 
 }
