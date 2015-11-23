@@ -33,7 +33,7 @@ public class AppDeployment
             AndroidDriver driver = driverFactory.create(device);
 
             //Login
-            //This is where you would put that logs you in.
+            //This is where you would put code that logs you in or does something specific on your app
         }
 
         Assert.assertTrue(appiumService.killAllAppiumServers());
