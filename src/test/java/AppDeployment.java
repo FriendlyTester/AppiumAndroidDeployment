@@ -1,6 +1,9 @@
 import io.appium.java_client.android.AndroidDriver;
+import models.AndroidDevice;
 import org.junit.Assert;
 import org.junit.Test;
+import services.ADBService;
+import services.AppiumService;
 
 import java.io.IOException;
 import java.util.List;
@@ -13,9 +16,6 @@ public class AppDeployment
     @Test
     public void DeployApp() throws IOException, InterruptedException
     {
-        //https://discuss.appium.io/t/launching-and-stopping-appium-server-programmtically/700
-        //Via Terminal. adb devices | tail -n +2 | cut -sf 1 | xargs -I {} adb -s {} install <Path to apk>
-
         AppiumService appiumService = new AppiumService();
         Assert.assertTrue(appiumService.killAllAppiumServers());
 
@@ -31,6 +31,9 @@ public class AppDeployment
         {
             DriverFactory  driverFactory = new DriverFactory();
             AndroidDriver driver = driverFactory.create(device);
+
+            //Login
+            //This is where you would put that logs you in.
         }
 
         Assert.assertTrue(appiumService.killAllAppiumServers());

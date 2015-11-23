@@ -1,3 +1,6 @@
+package services;
+
+import models.AndroidDevice;
 import org.apache.commons.exec.CommandLine;
 import org.apache.commons.exec.DefaultExecuteResultHandler;
 import org.apache.commons.exec.DefaultExecutor;

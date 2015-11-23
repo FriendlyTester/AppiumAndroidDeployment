@@ -1,3 +1,5 @@
+import models.AndroidDevice;
+
 import java.util.List;
 
 /**
