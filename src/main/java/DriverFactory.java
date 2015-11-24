@@ -19,7 +19,7 @@ public class DriverFactory
         capabilities.setCapability("udid", device.DeviceName);
         capabilities.setCapability(MobileCapabilityType.APP, "/Users/richard/Downloads/Priority-20150921_Ref_1_debug.apk");
         //capabilities.setCapability(MobileCapabilityType.APP_WAIT_ACTIVITY, "<Put Activity here>");
-        
+
         return new AndroidDriver(new URL(String.format("http://127.0.0.1:%s/wd/hub", device.AppiumPort)), capabilities);
     }
 }
